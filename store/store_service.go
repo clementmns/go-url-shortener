@@ -36,7 +36,7 @@ func InitializeStore() *StorageService {
 	return storeService
 }
 
-func SaveUrlMapping(shortUrl string, url string, userId string) {
+func SaveUrlMapping(shortUrl string, url string) {
 	err := storeService.redisClient.Set(ctx, shortUrl, url, CacheDuration)
 	if err != nil {
 		panic(fmt.Sprintf("Failed saving key url | Error: %v - shortUrl: %s - url: %s\n", err, shortUrl, url))

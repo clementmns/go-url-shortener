@@ -18,10 +18,9 @@ func TestStoreInit(t *testing.T) {
 
 func TestInsertionAndRetrieval(t *testing.T) {
 	url := "https://www.google.com"
-	userUUID := "test-user-uuid"
 	shortUrl := "test-short-url"
 
-	SaveUrlMapping(shortUrl, url, userUUID)
+	SaveUrlMapping(shortUrl, url)
 
 	retrievedUrl := RetrieveInitialUrl(shortUrl)
 	assert.Equal(t, url, retrievedUrl)
