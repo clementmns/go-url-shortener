@@ -3,6 +3,8 @@ package store
 import (
 	"context"
 	"fmt"
+	"os"
+	"strconv"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -20,10 +22,18 @@ var (
 const CacheDuration = 6 * time.Hour
 
 func InitializeStore() *StorageService {
+	address := os.Getenv("REDIS_ADDR")
+	password := os.Getenv("REDIS_PASSWORD")
+	db := os.Getenv("REDIS_DB")
+	dbInt, err := strconv.Atoi(db)
+	if err != nil {
+		panic(fmt.Sprintf("Failed to parse Redis configuration"))
+	}
+
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "",
-		DB:       0,
+		Addr:     address,
+		Password: password,
+		DB:       dbInt,
 	})
 
 	pong, err := redisClient.Ping(ctx).Result()

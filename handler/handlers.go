@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"os"
 	"url-shortener/shortener"
 	"url-shortener/store"
 
@@ -20,10 +21,10 @@ func CreateShortUrl(c *gin.Context) {
 		return
 	}
 
-	shortUrl := shortener.GenerateShortUrl(request.Url, request.UserId)
+	shortUrl := shortener.GenerateShortUrl(request.Url)
 	store.SaveUrlMapping(shortUrl, request.Url)
 
-	host := "http://localhost:9808/"
+	host := os.Getenv("HOST")
 	c.JSON(200, gin.H{
 		"message": "Short URL created",
 		"url":     host + shortUrl,

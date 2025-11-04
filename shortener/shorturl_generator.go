@@ -25,8 +25,8 @@ func base58Encoder(bytes []byte) string {
 	return string(result)
 }
 
-func GenerateShortUrl(url string, userId string) string {
-	urlHash := sha2560f(url + userId)
+func GenerateShortUrl(url string) string {
+	urlHash := sha2560f(url)
 	number := new(big.Int).SetBytes(urlHash).Uint64()
 	result := base58Encoder([]byte(fmt.Sprintf("%d", number)))
 	return result
